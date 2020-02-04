@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Генератор паролей</string>
+    <string name="use_digits">Использовать цифры</string>
+    <string name="use_uppercase_letters">Использовать прописные буквы</string>
+    <string name="use_lowercase_letters">Использовать строчные буквы</string>
+    <string name="use_special_symbols">Использовать специальные символы (%, *, ),?, @, #, $, ~)</string>
+    <string name="password_length">Длинна пароля : %1$d</string>
+    <string name="max_size_error">Длинна пароля не может быть больше 15 символов!</string>
+    <string name="min_size_error">Длинна пароля не может быть меньше 6 символов!</string>
+    <string name="generate">генерировать</string>
+    <string name="empty_arguments">Выберите хотя бы один вариант символов!</string>
+</resources>
