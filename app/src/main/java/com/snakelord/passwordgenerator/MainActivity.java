@@ -153,11 +153,13 @@ public class MainActivity extends AppCompatActivity
             password.setText(R.string.empty_arguments);
         else
         {
-            String generatedPassword = "";
+            StringBuilder passBuilder = new StringBuilder();
             for (int i = 0; i < passwordLength; i++)
-                generatedPassword += passwordSymbols.charAt(random.nextInt(passwordSymbols.length()));
+            {
+                passBuilder.append(passwordSymbols.charAt(random.nextInt(passwordSymbols.length())));
+            }
             password.setTextIsSelectable(true);
-            password.setText(generatedPassword);
+            password.setText(passBuilder.toString());
         }
     }
 }
