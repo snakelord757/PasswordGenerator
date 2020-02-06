@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View v)
             {
                 password.setText("");
-                if (passwordLength == 100)
+                if (passwordLength == 15)
                 {
                     password.setText(R.string.max_size_error);
                     return;
@@ -101,49 +101,16 @@ public class MainActivity extends AppCompatActivity
         }
 
         if (useDigits.isChecked())
-            passwordSymbols = digits;
+            passwordSymbols += digits;
 
         if (useUppercase.isChecked())
-            passwordSymbols = uppercase;
+            passwordSymbols += uppercase;
 
         if (useLowercase.isChecked())
-            passwordSymbols = lowercase;
+            passwordSymbols += lowercase;
 
         if (useSpecialSymbols.isChecked())
-            passwordSymbols = specialSymbols;
-
-        if (useDigits.isChecked() && useUppercase.isChecked())
-            passwordSymbols = digits + uppercase;
-
-        if (useDigits.isChecked() && useLowercase.isChecked())
-            passwordSymbols = digits + lowercase;
-
-        if (useDigits.isChecked() && useSpecialSymbols.isChecked())
-            passwordSymbols = digits + specialSymbols;
-
-        if (useLowercase.isChecked() && useUppercase.isChecked())
-            passwordSymbols = lowercase + uppercase;
-
-        if (useLowercase.isChecked() && useSpecialSymbols.isChecked())
-            passwordSymbols = lowercase + specialSymbols;
-
-        if (useUppercase.isChecked() && useSpecialSymbols.isChecked())
-            passwordSymbols = uppercase + specialSymbols;
-
-        if (useDigits.isChecked() && useUppercase.isChecked() && useLowercase.isChecked())
-            passwordSymbols = digits + uppercase + lowercase;
-
-        if (useDigits.isChecked() && useUppercase.isChecked() && useSpecialSymbols.isChecked())
-            passwordSymbols = digits + uppercase + specialSymbols;
-
-        if (useDigits.isChecked() && useLowercase.isChecked() && useSpecialSymbols.isChecked())
-            passwordSymbols = digits + lowercase + specialSymbols;
-
-        if (useLowercase.isChecked() && useUppercase.isChecked() && useSpecialSymbols.isChecked())
-            passwordSymbols = lowercase + uppercase + specialSymbols;
-
-        if (useDigits.isChecked() && useLowercase.isChecked() && useUppercase.isChecked() && useSpecialSymbols.isChecked())
-            passwordSymbols = digits + lowercase + uppercase + specialSymbols;
+            passwordSymbols += specialSymbols;
         return true;
     }
 
