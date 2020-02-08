@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
@@ -37,51 +38,54 @@ public class MainActivity extends AppCompatActivity
         useSpecialSymbols = findViewById(R.id.use_special_symbols);
 
         passwordLengthText = findViewById(R.id.password_length);
-        passwordLengthText.setText(getString(R.string.password_length,passwordLength));
+        passwordLengthText.setText(getString(R.string.password_length, passwordLength));
 
         password = findViewById(R.id.password);
 
         plusButton = findViewById(R.id.plus);
-        plusButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                password.setText("");
-                if (passwordLength == 15)
-                {
-                    password.setText(R.string.max_size_error);
-                    return;
-                }
-                passwordLengthText.setText(getString(R.string.password_length,++passwordLength));
-            }
-        });
-
         minusButton = findViewById(R.id.minus);
-        minusButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                password.setText("");
-                if (passwordLength == 6)
-                {
-                    password.setText(R.string.min_size_error);
-                    return;
-                }
-                passwordLengthText.setText(getString(R.string.password_length,--passwordLength));
-            }
-        });
-
         generatePasswordButton = findViewById(R.id.generate);
-        generatePasswordButton.setOnClickListener(new View.OnClickListener()
-        {
+
+        OnClickListener plusMinusGenerateClick = new OnClickListener() {
             @Override
             public void onClick(View v)
             {
-                generatePassword();
+                switch (v.getId())
+                {
+                    case (R.id.plus):
+                        {
+                        password.setText("");
+                        if (passwordLength == 15) {
+                            password.setText(R.string.max_size_error);
+                            break;
+                        }
+                        passwordLengthText.setText(getString(R.string.password_length, ++passwordLength));
+                        break;
+                        }
+
+                    case R.id.minus:
+                        {
+                        password.setText("");
+                        if (passwordLength == 6) {
+                            password.setText(R.string.min_size_error);
+                            break;
+                        }
+                        passwordLengthText.setText(getString(R.string.password_length, --passwordLength));
+                        break;
+                        }
+
+                    case R.id.generate:
+                        {
+                        generatePassword();
+                        break;
+                        }
+                }
             }
-        });
+        };
+
+        plusButton.setOnClickListener(plusMinusGenerateClick);
+        minusButton.setOnClickListener(plusMinusGenerateClick);
+        generatePasswordButton.setOnClickListener(plusMinusGenerateClick);
     }
 
     private Boolean setPasswordSymbols()
@@ -107,6 +111,7 @@ public class MainActivity extends AppCompatActivity
 
         if (useSpecialSymbols.isChecked())
             passwordSymbols += specialSymbols;
+
         return true;
     }
 
