@@ -12,73 +12,63 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity
 {
-
-    Button plusButton;
-    Button minusButton;
-    Button generatePasswordButton;
-    CheckBox useDigits;
-    CheckBox useUppercase;
-    CheckBox useLowercase;
-    CheckBox useSpecialSymbols;
-    String passwordSymbols = "";
-    TextView passwordLengthText;
-    TextView password;
-    int passwordLength = 6;
-    final Random random = new Random();
+    private CheckBox useDigitsCheckBox;
+    private CheckBox useUppercaseCheckBox;
+    private CheckBox useLowercaseCheckBox;
+    private CheckBox useSpecialSymbolsCheckBox;
+    private TextView passwordLengthTextView;
+    private TextView passwordTextView;
+    private int passwordLength = 6;
+    private final Random random = new Random();
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        useDigits = findViewById(R.id.use_digits);
-        useUppercase = findViewById(R.id.use_uppercase_letters);
-        useLowercase = findViewById(R.id.use_lowercase_letters);
-        useSpecialSymbols = findViewById(R.id.use_special_symbols);
+        useDigitsCheckBox = findViewById(R.id.use_digits);
+        useUppercaseCheckBox = findViewById(R.id.use_uppercase_letters);
+        useLowercaseCheckBox = findViewById(R.id.use_lowercase_letters);
+        useSpecialSymbolsCheckBox = findViewById(R.id.use_special_symbols);
 
-        passwordLengthText = findViewById(R.id.password_length);
-        passwordLengthText.setText(getString(R.string.password_length, passwordLength));
+        passwordLengthTextView = findViewById(R.id.password_length);
+        passwordLengthTextView.setText(getString(R.string.password_length, passwordLength));
 
-        password = findViewById(R.id.password);
+        passwordTextView = findViewById(R.id.password);
 
-        plusButton = findViewById(R.id.plus);
-        minusButton = findViewById(R.id.minus);
-        generatePasswordButton = findViewById(R.id.generate);
+        Button plusButton = findViewById(R.id.plus);
+        Button minusButton = findViewById(R.id.minus);
+        Button generatePasswordButton = findViewById(R.id.generate);
 
         OnClickListener plusMinusGenerateClick = new OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
-                switch (v.getId())
-                {
-                    case (R.id.plus):
-                        {
-                        password.setText("");
+            public void onClick(View v) {
+                switch (v.getId()) {
+
+                    case (R.id.plus): {
+                        passwordTextView.setText("");
                         if (passwordLength == 15) {
-                            password.setText(R.string.max_size_error);
+                            passwordTextView.setText(R.string.max_size_error);
                             break;
                         }
-                        passwordLengthText.setText(getString(R.string.password_length, ++passwordLength));
+                        passwordLengthTextView.setText(getString(R.string.password_length, ++passwordLength));
                         break;
-                        }
+                    }
 
-                    case R.id.minus:
-                        {
-                        password.setText("");
+                    case R.id.minus: {
+                        passwordTextView.setText("");
                         if (passwordLength == 6) {
-                            password.setText(R.string.min_size_error);
+                            passwordTextView.setText(R.string.min_size_error);
                             break;
                         }
-                        passwordLengthText.setText(getString(R.string.password_length, --passwordLength));
+                        passwordLengthTextView.setText(getString(R.string.password_length, --passwordLength));
                         break;
-                        }
+                    }
 
-                    case R.id.generate:
-                        {
+                    case R.id.generate: {
                         generatePassword();
                         break;
-                        }
+                    }
                 }
             }
         };
@@ -86,48 +76,57 @@ public class MainActivity extends AppCompatActivity
         plusButton.setOnClickListener(plusMinusGenerateClick);
         minusButton.setOnClickListener(plusMinusGenerateClick);
         generatePasswordButton.setOnClickListener(plusMinusGenerateClick);
+
     }
 
-    private Boolean setPasswordSymbols()
-    {
+    private String setPasswordSymbols(String passwordSymbols) {
         String digits = "0123456789";
         String lowercase = "abcdefghijklmnopqrstuvwxyz";
         String uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         String specialSymbols = "%*),?@#$~";
 
-        if(!(useDigits.isChecked() || useLowercase.isChecked() || useUppercase.isChecked() || useSpecialSymbols.isChecked()))
-        {
-            return false;
+        if(!(useDigitsCheckBox.isChecked() || useLowercaseCheckBox.isChecked() || useUppercaseCheckBox.isChecked() || useSpecialSymbolsCheckBox.isChecked())) {
+            return "";
         }
 
-        if (useDigits.isChecked())
+        if (useDigitsCheckBox.isChecked())
             passwordSymbols += digits;
 
-        if (useUppercase.isChecked())
+        if (useUppercaseCheckBox.isChecked())
             passwordSymbols += uppercase;
 
-        if (useLowercase.isChecked())
+        if (useLowercaseCheckBox.isChecked())
             passwordSymbols += lowercase;
 
-        if (useSpecialSymbols.isChecked())
+        if (useSpecialSymbolsCheckBox.isChecked())
             passwordSymbols += specialSymbols;
 
-        return true;
+        return passwordSymbols;
     }
 
-    public void generatePassword()
-    {
-        if(!setPasswordSymbols())
-            password.setText(R.string.empty_arguments);
-        else
-        {
+    public void generatePassword() {
+        String passwordSymbols = setPasswordSymbols("");
+        if(passwordSymbols.isEmpty())
+            passwordTextView.setText(R.string.empty_arguments);
+        else {
             StringBuilder passBuilder = new StringBuilder();
             for (int i = 0; i < passwordLength; i++)
             {
                 passBuilder.append(passwordSymbols.charAt(random.nextInt(passwordSymbols.length())));
             }
-            password.setTextIsSelectable(true);
-            password.setText(passBuilder.toString());
+            passwordTextView.setTextIsSelectable(true);
+            passwordTextView.setText(passBuilder.toString());
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        useDigitsCheckBox = null;
+        useUppercaseCheckBox = null;
+        useLowercaseCheckBox = null;
+        useSpecialSymbolsCheckBox = null;
+        passwordLengthTextView = null;
+        passwordTextView = null;
     }
 }
