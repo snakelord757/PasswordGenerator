@@ -3,14 +3,10 @@ package com.snakelord.passwordgenerator;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity
